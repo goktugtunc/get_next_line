@@ -1,6 +1,5 @@
 # get_next_line
-
-## Proje Amacı
+## Projenin Amacı
 
 - Projenin amacı get_next_line(fd) işlevi her çağırıldığında tek bir satırı yazdırmaktır.
 
@@ -15,3 +14,5 @@
 - Ancak eğer buffer size yüzünden satırı geçerse o satırı da kaybetmemek de önemlidir.
 
 - Bu projeye 03.08.2023 tarihinde başlanmıştır ve tahmini bitme süresi 4-5 gündür.
+
+- Proje ile ilgili detaylı bilgiye eklenen pdf üzerinden ulaşabilirsiniz.

@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gotunc <gotunc@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: gotunc <gotunc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 11:55:43 by gotunc            #+#    #+#             */
-/*   Updated: 2023/08/08 11:55:50 by gotunc           ###   ########.fr       */
+/*   Created: 2023/08/08 11:56:30 by gotunc            #+#    #+#             */
+/*   Updated: 2023/08/08 12:00:43 by gotunc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-char	*delline(char *line)
+static char	*del_line(char *left)
 {
 	char	*buff;
 	int		i;
 
 	i = 0;
-	while (line[i] && line[i] != '\n')
+	while (left[i] && left[i] != '\n')
 		i++;
-	if (!line[i])
+	if (!left[i])
 	{
-		free(line);
+		free(left);
 		return (NULL);
 	}
 	i++;
-	buff = ft_substr(line, i, (ft_strlen(line) - i));
+	buff = ft_substr(left, i, (ft_strlen(left) - i));
 	if (!buff)
 		return (NULL);
-	free(line);
+	free(left);
 	return (buff);
 }
 
-char	*getline(char *buffer)
+static char	*get_line(char *buffer)
 {
 	char	*line;
 	int		i;
@@ -52,7 +52,7 @@ char	*getline(char *buffer)
 	return (line);
 }
 
-char	*readfile(int fd, char *buffer)
+static char	*read_file(int fd, char *buffer)
 {
 	char	*buff;
 	int		byte;
@@ -79,15 +79,15 @@ char	*readfile(int fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[10240];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 10240)
 		return (NULL);
-	buffer = readfile(fd, buffer);
-	if (!buffer)
+	buffer[fd] = read_file(fd, buffer[fd]);
+	if (!buffer[fd])
 		return (NULL);
-	line = getline(buffer);
-	buffer = delline(buffer);
+	line = get_line(buffer[fd]);
+	buffer[fd] = del_line(buffer[fd]);
 	return (line);
 }
